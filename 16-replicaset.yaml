@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: rs-demo
+  name: nginx
   labels:
     project: roboshop
     tier: frontend
