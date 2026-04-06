@@ -9,6 +9,7 @@ spec:
     env: dev
     component: frontend
   ports:
+  - protocol: TCP
     port: 80        # service port
     targetPort: 80  # container port
-    nodeport: 32141
+    nodePort: 32141
