@@ -1,14 +1,14 @@
-apiversion: v1
-kind: service
+apiVersion: v1
+kind: Service
 metadata:
   name: nginx
+  namespace: roboshop
 spec:
-  selector:  
-    labels:
-      project: roboshop
-      env: dev
-      component: frontend
+  selector:
+    project: roboshop
+    env: dev
+    component: frontend
   ports:
-  - protocal: TCP
-    port: 80 #service port
-    targetport: 80 #container port
+  - protocol: TCP
+    port: 80        # service port
+    targetPort: 80  # container port
