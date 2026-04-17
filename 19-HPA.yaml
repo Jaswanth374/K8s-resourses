@@ -1,0 +1,29 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: HorizontalScaling-demo
+  namespace: roboshop
+  labels:
+    project: roboshop
+    tier: backend
+    component: user
+spec:
+  scaleTargetRef: 
+    apiVersion: apps/v1
+    kind: Deployment
+    name: user
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: resource
+    resource:
+      name: CPU
+      target:
+        type: Utilization
+        averageUtilization: 20
+  - type: resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 20
