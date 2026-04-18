@@ -1,39 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+  namespace: roboshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+
+---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: HPA-demo
   namespace: roboshop
-  labels:
-    project: roboshop
-    tier: backend
-    component: user
 spec:
   scaleTargetRef: 
     apiVersion: apps/v1
     kind: Deployment
     name: user
+
   minReplicas: 2
   maxReplicas: 10
+
   metrics:
-  - type: resource
+  - type: Resource
     resource:
-      name: CPU
+      name: cpu
       target:
         type: Utilization
         averageUtilization: 20
-  - type: resource
+
+  - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
         averageUtilization: 20
+
   behavior:
     scaleUp:
       stabilizationWindowSeconds: 0
       policies:
       - type: Percent
-        value: 100
+        value: 10
         periodSeconds: 15
+
     scaleDown:
       stabilizationWindowSeconds: 300
       policies:
